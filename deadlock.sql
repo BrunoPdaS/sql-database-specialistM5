@@ -1,0 +1,12 @@
+CREATE TABLE t (i INT) ENGINE = InnoDB;
+INSERT INTO t (i) VALUES(1);
+START TRANSACTION;
+
+SELECT * FROM t WHERE i = 1 FOR SHARE;
+
+-- próximo cliente
+ START TRANSACTION;
+ DELETE FROM t WHERE i = 1; -- xlock
+
+ --cliente 1
+ mysql> DELETE FROM t WHERE i = 1;
